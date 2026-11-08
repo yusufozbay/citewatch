@@ -1,0 +1,80 @@
+# CiteWatch configuration
+# Your API keys live in .env (the app can write it for you), never here.
+#
+# This file starts with a sample project. Its data is fictional and it is never fetched by the
+# schedule. Create your own project in the app, then remove the sample with:
+#   python -m citewatch demo --clear
+
+[schedule]
+# How often each prompt's AI Overview is fetched, in hours. 24 = daily, 168 = weekly.
+fetch_every_hours = 24
+# Automatic weekly briefs. false = only fetch; "Generate brief" in the app still works.
+auto_briefs = true
+# How often a brief is written per prompt, in days.
+brief_every_days = 7
+# Minimum stored AI Overview snapshots required before a brief is written.
+min_snapshots_for_brief = 3
+# Only snapshots from the last N days feed into a brief.
+brief_window_days = 7
+
+[dataforseo]
+# "google_aio" = Google AI Overview, "google_ai_mode" = Google AI Mode
+source = "google_aio"
+# Defaults for every prompt. 2840 = United States, 2826 = United Kingdom, 2276 = Germany, 2792 = Türkiye
+location_code = 2840
+language_code = "en"
+device = "desktop"          # desktop | mobile
+
+[ai]
+provider = "gemini"         # gemini | anthropic
+model = "gemini-3.8-flash"
+effort = "high"             # low | medium | high
+brand = ""                  # who briefs are written for; empty = a neutral brief
+brief_language = "English"
+
+# A project groups the prompts you track for one brand in one market. Prompts inherit
+# location_code, language_code, device, brief_language and brand, and can override any of them.
+[[projects]]
+id = "demo"
+name = "Demo · sample data"
+
+# One block per tracked prompt. The id is a stable slug.
+[[prompts]]
+id = "demo-best-tool-small-teams"
+keyword = "best project management tool for small teams"
+project = "demo"
+
+[[prompts]]
+id = "demo-tool-comparison"
+keyword = "project management tool comparison"
+project = "demo"
+
+[[prompts]]
+id = "demo-choose-task-tracker"
+keyword = "how to choose a task tracking tool"
+project = "demo"
+
+# Brands highlighted in the answers. own = true marks your brand.
+# aliases: other spellings. domains: count as "cited" when found in the sources.
+# projects: limit to these project ids. Leave it out to apply everywhere.
+[[brands]]
+name = "Northwind Tasks"
+aliases = ["Northwind"]
+domains = ["northwind-tasks.example"]
+own = true
+projects = ["demo"]
+
+[[brands]]
+name = "Planbright"
+domains = ["planbright.example"]
+projects = ["demo"]
+
+[[brands]]
+name = "Taskforge"
+domains = ["taskforge.example"]
+projects = ["demo"]
+
+[[brands]]
+name = "Orbit Boards"
+domains = ["orbit-boards.example"]
+projects = ["demo"]

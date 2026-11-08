@@ -1,0 +1,12 @@
+# Your keys, your settings and your data stay on your computer.
+.env
+config.toml
+config.toml.bak
+data/
+briefs/
+logs/
+
+.venv/
+__pycache__/
+ui/node_modules/
+.DS_Store
