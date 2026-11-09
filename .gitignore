@@ -1,7 +1,9 @@
 # Your keys, your settings and your data stay on your computer.
 .env
+.env.*
+!.env.example
 config.toml
-config.toml.bak
+*.bak
 data/
 briefs/
 logs/

@@ -296,9 +296,10 @@ def make_handler(api: Api):
         def do_GET(self):
             url = urlparse(self.path)
             path = url.path
+            # DNS rebinding: a website pointing its own domain at 127.0.0.1 must not be able to read the API.
+            if path.startswith("/api/") and not _local(self.headers.get("Host")):
+                return self._json(403, {"error": "forbidden host"})
             if path == "/api/settings/keys":
-                if not _local(self.headers.get("Host")):  # last 4 characters only, but still: this machine only
-                    return self._json(403, {"error": "forbidden host"})
                 return self._json(200, {**keys.status(), "ai_provider": load_config().provider})
             if m := re.match(r"^/api/briefs/(\d+)/download$", path):
                 return self._download_brief(int(m[1]), (parse_qs(url.query).get("format") or ["md"])[0])
